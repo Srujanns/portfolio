@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 
 // Replace profile.jpg in /public or assets
@@ -189,6 +189,43 @@ function Projects(){
 }
 
 function Contact(){
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [message, setMessage] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [status, setStatus] = useState(null)
+
+  async function handleSubmit(e){
+    e.preventDefault()
+    setStatus(null)
+    if (!name.trim() || !email.trim() || !message.trim()) {
+      setStatus({ ok: false, message: 'Please fill all fields.' })
+      return
+    }
+
+    setLoading(true)
+    try {
+      const base = import.meta.env.VITE_API_BASE || ''
+      const res = await fetch(`${base}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message })
+      })
+      const data = await res.json().catch(()=>({}))
+      if (res.ok) {
+        setStatus({ ok: true, message: 'Message sent. Thank you!' })
+        setName(''); setEmail(''); setMessage('')
+      } else {
+        setStatus({ ok: false, message: data?.error || 'Failed to send message.' })
+      }
+    } catch (err) {
+      console.error(err)
+      setStatus({ ok: false, message: 'Network error. Try later.' })
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <section id="contact" className="py-10">
       <h2 className="text-3xl font-semibold text-[var(--accent)]">Contact</h2>
@@ -208,15 +245,20 @@ function Contact(){
           </ul>
         </div>
 
-        <form
-          className="card space-y-4"
-          onSubmit={(e) => { e.preventDefault(); alert('Contact form not configured. Please email me instead.'); }}
-        >
-          <input aria-label="name" placeholder="Your name" className="w-full p-3 rounded-md bg-[#0b1220] border border-slate-800" />
-          <input aria-label="email" placeholder="Email" className="w-full p-3 rounded-md bg-[#0b1220] border border-slate-800" />
-          <textarea aria-label="message" placeholder="Message" className="w-full p-3 rounded-md bg-[#0b1220] border border-slate-800 h-28"></textarea>
+        <form className="card space-y-4" onSubmit={handleSubmit}>
+          <input aria-label="name" value={name} onChange={(e)=>setName(e.target.value)} placeholder="Your name" className="w-full p-3 rounded-md bg-[#0b1220] border border-slate-800" />
+          <input aria-label="email" value={email} onChange={(e)=>setEmail(e.target.value)} placeholder="Email" className="w-full p-3 rounded-md bg-[#0b1220] border border-slate-800" />
+          <textarea aria-label="message" value={message} onChange={(e)=>setMessage(e.target.value)} placeholder="Message" className="w-full p-3 rounded-md bg-[#0b1220] border border-slate-800 h-28"></textarea>
 
-          <button className="w-full py-3 rounded-md bg-[var(--accent)] text-black font-semibold">Send Message</button>
+          <button type="submit" disabled={loading} className="w-full py-3 rounded-md bg-[var(--accent)] text-black font-semibold">
+            {loading ? 'Sending…' : 'Send Message'}
+          </button>
+
+          {status && (
+            <div className={`text-sm mt-2 ${status.ok ? 'text-green-400' : 'text-red-400'}`}>
+              {status.message}
+            </div>
+          )}
         </form>
       </div>
     </section>
