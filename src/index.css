@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --accent: #00eaff;
+  --bg: #0b0b0d;
+  --card: #0f1720;
+}
+
+body{ background: var(--bg); }
+.card { @apply bg-[#0f1720] rounded-2xl p-6 shadow-xl; }
+.glow { box-shadow: 0 8px 30px rgba(0,234,255,0.08); }
