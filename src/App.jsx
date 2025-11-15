@@ -227,7 +227,7 @@ function Footer(){
   return (
     <footer className="py-8 mt-12 text-center text-slate-400">
       <div className="max-w-6xl mx-auto">
-        © {new Date().getFullYear()} Srujan N S — Built with React & Tailwind
+        © {new Date().getFullYear()} Srujan N S 
       </div>
     </footer>
   )
