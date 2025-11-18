@@ -72,7 +72,7 @@ function Hero(){
           <a href="#projects" className="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-[var(--accent)] text-black font-semibold">
             View Projects
           </a>
-          <a href="/assets/Srujan_N_S_Updated_V2.pdf" download className="inline-flex items-center gap-3 px-5 py-3 rounded-full border border-slate-700">
+          <a href="/assets/Resume.pdf" download className="inline-flex items-center gap-3 px-5 py-3 rounded-full border border-slate-700">
             Download Resume
           </a>
         </div>
@@ -245,21 +245,7 @@ function Contact(){
           </ul>
         </div>
 
-        <form className="card space-y-4" onSubmit={handleSubmit}>
-          <input aria-label="name" value={name} onChange={(e)=>setName(e.target.value)} placeholder="Your name" className="w-full p-3 rounded-md bg-[#0b1220] border border-slate-800" />
-          <input aria-label="email" value={email} onChange={(e)=>setEmail(e.target.value)} placeholder="Email" className="w-full p-3 rounded-md bg-[#0b1220] border border-slate-800" />
-          <textarea aria-label="message" value={message} onChange={(e)=>setMessage(e.target.value)} placeholder="Message" className="w-full p-3 rounded-md bg-[#0b1220] border border-slate-800 h-28"></textarea>
-
-          <button type="submit" disabled={loading} className="w-full py-3 rounded-md bg-[var(--accent)] text-black font-semibold">
-            {loading ? 'Sending…' : 'Send Message'}
-          </button>
-
-          {status && (
-            <div className={`text-sm mt-2 ${status.ok ? 'text-green-400' : 'text-red-400'}`}>
-              {status.message}
-            </div>
-          )}
-        </form>
+       
       </div>
     </section>
   )
