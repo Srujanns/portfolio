@@ -119,7 +119,7 @@ function About(){
 
             <div>
               <h4 className="text-sm text-slate-400">Certifications</h4>
-              <p className="mt-1">JavaScript (HackerRank), Responsive Web Design (freeCodeCamp)</p>
+              <p className="mt-1">JavaScript (HackerRank), Google data Analytics, Google Cloud platform Certificate</p>
             </div>
           </div>
         </div>
